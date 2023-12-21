@@ -16,8 +16,13 @@ var employee struct {
 }
 
 func main() {
-	fmt.Printf("Management System\tver0.1")
-	f, err := os.Open("foo.txt")
+	fmt.Printf("Management System\tver0.1\n")
+	// Take file name as user input
+	reader := bufio.NewReader(os.Stdin)
+	fmt.Println("Enter file name:")
+	name, _ := reader.ReadString('\n')
+	f, err := os.Open(name)
+	//Handle errors
 	if err != nil {
 		switch {
 		case errors.Is(err, fs.ErrNotExist):
@@ -35,7 +40,7 @@ func main() {
 	defer f.Close()
 
 	scanner := bufio.NewScanner(f)
-
+	//loop and print
 	for scanner.Scan() {
 
 		fmt.Println(scanner.Text())
